@@ -1,0 +1,70 @@
+<!-- Fondo oscuro que ocupa toda la pantalla -->
+<div class="login-wrapper">
+
+  <!-- Overlay de login exitoso -->
+  <div class="login-overlay" *ngIf="successMsg">
+    <div class="login-overlay__card">
+      <i class="bi bi-check-circle-fill login-overlay__icon"></i>
+      <p class="login-overlay__text">{{ successMsg }}</p>
+    </div>
+  </div>
+
+  <!-- Tarjeta central con bordes redondeados -->
+  <div class="login-card">
+
+    <!-- Título del formulario -->
+    <h2 class="login-card__title">Iniciar Sesión</h2>
+
+    <!-- Mensaje de error -->
+    <div class="login-card__error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <!-- Formulario de login -->
+    <form class="login-card__form" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+
+    <!-- Campo Email -->
+    <div class="login-card__field">
+        <label class="login-card__label" for="email">Email</label>
+        <input class="login-card__input" type="email" id="email" placeholder="tucorreo@email.com"
+            [(ngModel)]="email" name="email" required email #emailField="ngModel">
+        <!-- Mensaje de error -->
+        <span class="login-card__error" *ngIf="emailField.invalid && emailField.touched">
+        Ingresá un email válido
+        </span>
+    </div>
+
+    <!-- Campo Contraseña -->
+    <div class="login-card__field">
+        <label class="login-card__label" for="password">Contraseña</label>
+        <div class="login-card__input-wrapper">
+        <input class="login-card__input" [type]="showPassword ? 'text' : 'password'" id="password" placeholder="••••••••"
+                [(ngModel)]="password" name="password" required #passwordField="ngModel">
+        <button type="button" class="login-card__eye" (click)="showPassword = !showPassword">
+            <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
+        </button>
+        </div>
+        <!-- Mensaje de error -->
+        <span class="login-card__error" *ngIf="passwordField.invalid && passwordField.touched">
+        Ingrese una contraseña valida
+        </span>
+    </div>
+
+    <button type="submit" class="login-card__btn">Iniciar Sesión</button>
+</form>
+    
+
+    <!-- Separador con texto "O ingresa con" -->
+    <div class="login-card__divider">
+      <span>O ingresa con</span>
+    </div>
+
+    <!-- Íconos de redes sociales para login alternativo -->
+    <div class="login-card__social">
+        <a routerLink="/not-found" class="login-card__social-icon"><i class="bi bi-instagram"></i></a>
+        <a routerLink="/not-found" class="login-card__social-icon"><i class="bi bi-facebook"></i></a>
+        <a routerLink="/not-found" class="login-card__social-icon"><i class="bi bi-google"></i></a>
+    </div>
+
+    <!-- Link para ir a registro -->
+    <a class="login-card__register" [routerLink]="['/registro']">Crear una cuenta</a>
+  </div>
+</div>

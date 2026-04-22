@@ -1,0 +1,22 @@
+<div class="carrito-container ms-auto me-2 mt-2" style="max-width: 300px;">
+        <h2>Compras</h2>
+            <ul class="list-group">
+               <!-- PASO 5 (vista cart): Itera sobre los CartItem emitidos por el observable.
+                    Cada item muestra: nombre del producto + talle + precio de la variante + cantidad. -->
+               <li class="list-group-item d-flex justify-content-between align-items-center"
+               *ngFor="let item of (cartItems$ | async)">
+                    <ul>
+                        <li>
+                            {{item.producto.nombre}}-{{item.variante.talle | uppercase}}-{{item.variante.color}},
+                            {{item.variante.precio | currency:'USD':'symbol':'1.0-0':'en-US'}},
+                            x{{item.quantity}}
+                        </li>
+                    </ul>
+                    
+               </li>
+            </ul>
+            <div class="d-flex gap-2 mt-3">
+              <button type="button" class="btn btn-success w-50" (click)="comprar()">Comprar</button>
+              <button type="button" class="btn btn-danger w-50" (click)="clearCart()">Vaciar</button>
+            </div>
+</div>

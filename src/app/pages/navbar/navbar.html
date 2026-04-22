@@ -1,0 +1,135 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a routerLink="/productos">
+      <img src="/img/logo.jpeg" alt="logo" width="90" height="100">
+    </a>  
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+      <ul class="navbar-nav d-flex flex-row gap-3 nav-center">
+        <li class="nav-item nav-link nav-pill px-3">
+          <a class="nav-link" [routerLink]="['/productos']" aria-current="page">Inicio</a>
+        </li>
+        <li class="nav-item dropdown nav-link nav-pill px-3">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categorias
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="buscarCategoria('Verano')">Verano</a></li>
+            <li><a class="dropdown-item" (click)="buscarCategoria('Otoño')">Otoño</a></li>
+            <li><a class="dropdown-item" (click)="buscarCategoria('Invierno')">Invierno</a></li>
+            <li><a class="dropdown-item" (click)="buscarCategoria('Primavera')">Primavera</a></li>
+          </ul>
+        </li>
+        <li class="nav-item nav-link nav-pill px-3">
+          <a class="nav-link" [routerLink]="['/contacto']" aria-current="page">Contacto</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Botones derecha: Búsqueda, Usuario, Carrito -->
+    <div class="d-flex align-items-center gap-3 me-3">
+      <!-- Búsqueda -->
+      <button class="nav-icon-btn" (click)="toggleSearch()" title="Buscar">
+        <i class="bi bi-search fs-5"></i>
+      </button>
+
+      <!-- Usuario -->
+      <div class="dropdown">
+        <button class="nav-icon-btn" data-bs-toggle="dropdown" aria-expanded="false" title="Usuario">
+          <i class="bi fs-5" [ngClass]="(usuario$ | async) ? 'bi-person-fill' : 'bi-person'"></i>
+        </button>
+
+      <ul class="dropdown-menu dropdown-menu-end">
+
+        <!-- Menú si NO está logueado -->
+        <ng-container *ngIf="!(usuario$ | async); else logueado">
+          <li><a class="dropdown-item" [routerLink]="['/login']">Iniciar Sesión</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/registro']">Registrarse</a></li>
+        </ng-container>
+
+        <!-- Menú si está logueado -->
+        <ng-template #logueado>
+          <ng-container *ngIf="(usuario$ | async) as user">
+            <li><span class="dropdown-item-text fw-bold">{{ user.nombre }}
+              <span class="badge bg-primary ms-1" *ngIf="isAdmin$ | async">Admin</span>
+            </span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" [routerLink]="['/perfil']">Mi Perfil</a></li>
+            <li *ngIf="!(isAdmin$ | async)">
+              <a class="dropdown-item" [routerLink]="['/mis-pedidos']">Mis Pedidos</a>
+            </li>
+            <!-- Mostrar "Mis Usuarios" solo si ES admin -->
+            <li *ngIf="isAdmin$ | async">
+              <a class="dropdown-item" [routerLink]="['/mis-usuarios']">Mis Usuarios</a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" style="cursor:pointer" (click)="logout()">Cerrar Sesión</a></li>
+          </ng-container>
+        </ng-template>
+
+      </ul>
+    </div>
+
+      <!-- Carrito -->
+      <button class="nav-icon-btn position-relative"
+              data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" title="Carrito">
+        <i class="bi bi-cart3 fs-5"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              *ngIf="(cartCount$ | async) as count">
+          {{ count }}
+        </span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Barra de búsqueda desplegable -->
+<div class="search-bar py-2 px-3" *ngIf="searchOpen">
+  <div class="container-fluid d-flex">
+    <input type="text" class="form-control me-2" placeholder="Buscar productos..."
+           [(ngModel)]="searchTerm" (keyup.enter)="search()" autofocus>
+    <button class="btn btn-dark" (click)="search()">
+      <i class="bi bi-search"></i>
+    </button>
+    <button class="btn btn-outline-secondary ms-1" (click)="toggleSearch()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Offcanvas carrito (derecha) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="cartOffcanvasLabel">Mi Carrito</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body">
+    <app-cart></app-cart>
+  </div>
+</div>
+
+<!-- Menú hamburguesa (solo mobile) -->
+  <div class="hamburger-menu d-lg-none">
+    <input type="checkbox" id="hamburger-toggle" hidden>
+    <label for="hamburger-toggle" class="hamburger-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <div class="hamburger-dropdown">
+      <ul>
+        <li><a [routerLink]="['/productos']">Inicio</a></li>
+        <li>
+          <details>
+            <summary>Categorias</summary>
+            <ul>
+              <li><a class="dropdown-item" (click)="buscarCategoria('Verano')">Verano</a></li>
+              <li><a class="dropdown-item" (click)="buscarCategoria('Otoño')">Otoño</a></li>
+              <li><a class="dropdown-item" (click)="buscarCategoria('Invierno')">Invierno</a></li>
+              <li><a class="dropdown-item" (click)="buscarCategoria('Primavera')">Primavera</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a [routerLink]="['/contacto']">Contacto</a></li>
+      </ul>
+    </div>
+  </div>

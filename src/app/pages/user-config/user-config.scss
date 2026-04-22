@@ -1,0 +1,34 @@
+.user-config {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 30px;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  background: #fff;
+
+  h3 {
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__eye {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+
+    &:hover {
+      color: #333;
+    }
+  }
+}

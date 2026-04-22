@@ -1,0 +1,21 @@
+.div{
+    width: 100%;
+    height: auto;
+}
+p {
+  background-color: #000;
+  width: 100vw;
+  position: relative;
+  left: 605px;
+  transform: translateX(-50%);
+  color: #fff;
+  text-align: center;
+  padding: 10px 10px;
+  margin-bottom: 2px;
+}
+
+@media (max-width: 676px) {
+  p {
+    display: none;
+  }
+}

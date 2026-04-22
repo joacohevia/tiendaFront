@@ -1,0 +1,23 @@
+<div class="carrousel">
+  <div class="carrousel__track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+    @for (oferta of ofertas; track $index) {
+      <div class="carrousel__slide">
+        <img [src]="oferta.imagen" [alt]="oferta.titulo" class="carrousel__img">
+        <div class="carrousel__caption">{{ oferta.titulo }}</div>
+      </div>
+    }
+  </div>
+
+  <button class="carrousel__arrow carrousel__arrow--left" (click)="prev()">
+    <i class="bi bi-chevron-left"></i>
+  </button>
+  <button class="carrousel__arrow carrousel__arrow--right" (click)="next()">
+    <i class="bi bi-chevron-right"></i>
+  </button>
+
+  <div class="carrousel__dots">
+    @for (oferta of ofertas; track $index) {
+      <span class="carrousel__dot" [class.active]="$index === currentIndex" (click)="currentIndex = $index"></span>
+    }
+  </div>
+</div>

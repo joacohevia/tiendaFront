@@ -1,0 +1,320 @@
+/* =============================================
+   HOST: hace que el componente ocupe todo el alto
+   disponible para poder centrar la tarjeta
+   ============================================= */
+:host {
+  display: block;
+  height: 100%;
+  position: relative;
+  width: 100vw;
+  left: 605px;
+  transform: translateX(-50%);
+}
+
+/* =============================================
+   WRAPPER: fondo blanco que cubre toda la pantalla,
+   centra la tarjeta horizontal y verticalmente
+   ============================================= */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../register/Fondo\ promocional\ de\ indumentaria\ deportiva.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  padding: 4%;
+  margin-bottom: 2%;
+
+   // Capa oscura encima de la imagen para que el form resalte
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);  
+  }
+}
+
+/* =============================================
+   CARD: tarjeta gris más grande, superpuesta con
+   sombra para efecto flotante sobre el fondo
+   ============================================= */
+.login-card {
+  position: relative;   // para que quede por encima del ::before
+  background: rgba(255, 255, 255, 0.07);   // fondo casi transparente
+  z-index: 1;
+  backdrop-filter: blur(12px);             // efecto vidrio esmerilado
+  -webkit-backdrop-filter: blur(12px);
+  border-style: groove;
+  border-color: red;
+  border-radius: 24px;
+  padding: 50px 45px;                 /* más espacio interno */
+  width: 100%;
+  max-width: 440px;                   /* más ancha que antes */
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);  /* sombra para efecto superpuesto */
+
+  /* Título "Iniciar Sesión" */
+  &__title {
+    font-size: 26px;                   /* más grande */
+    font-weight: 700;
+    margin-bottom: 28px;
+  }
+
+  /* Mensaje de error */
+  &__error {
+    background-color: #fc313122;
+    color: #ff6b6b;
+    border: 1px solid #ff4d4d55;
+    border-radius: 10px;
+    padding: 2px 5px;
+    font-size: 13px;
+    z-index: 3;
+  }
+
+  /* Formulario: separa los campos verticalmente */
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;                         /* más espacio entre campos */
+  }
+
+  /* Cada grupo label + input */
+  &__field {
+    text-align: left;
+  }
+
+  /* Labels de los campos */
+  &__label {
+    display: block;
+    font-size: 14px;                   /* un poco más grande */
+    color: #bbb;
+    margin-bottom: 6px;
+  }
+
+  /* Inputs más grandes */
+  &__input {
+    width: 100%;
+    padding: 14px 18px;               /* más padding = input más alto */
+    border: none;
+    border-radius: 24px;              /* pill más redondeado */
+    background-color: #e8e8e8;
+    font-size: 16px;                   /* texto más grande */
+    color: #333;
+    outline: none;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:focus {
+      background-color: #fff;
+      box-shadow: 0 0 0 2px #38e864;
+    }
+  }
+
+  /* Contenedor del input de contraseña + botón ojo */
+  &__input-wrapper {
+    position: relative;
+  }
+
+  /* Botón ojo para toggle de contraseña */
+  &__eye {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 18px;                   /* ícono más grande */
+    cursor: pointer;
+    padding: 0;
+
+    &:hover {
+      color: #333;
+    }
+  }
+
+  /* Botón principal "Iniciar Sesión" */
+  &__btn {
+    width: 100%;
+    padding: 14px;                     /* más alto */
+    border: none;
+    border-radius: 24px;
+    background-color: #e8a838;
+    color: #fff;
+    font-size: 17px;                   /* texto más grande */
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #2ecc71;       /* verde en hover */
+    }
+  }
+
+  /* =============================================
+     DIVIDER: línea separadora con texto "O ingresa con"
+     ============================================= */
+  &__divider {
+    display: flex;
+    align-items: center;
+    margin: 22px 0;
+    color: #888;
+    font-size: 13px;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: #555;
+    }
+
+    span {
+      padding: 0 12px;
+    }
+  }
+
+  /* Contenedor de íconos sociales */
+  &__social {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 20px;
+  }
+
+  /* Cada ícono social */
+  &__social-icon {
+    color: #fff;
+    font-size: 28px;
+    transition: color 0.3s, transform 0.2s;
+    text-decoration: none;
+
+    &:hover {
+      color: #e8a838;
+      transform: scale(1.15);
+    }
+  }
+
+  /* Link "Crear una cuenta" */
+  &__register {
+    display: block;
+    color: #ccc;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #e8a838;
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Overlay que congela la pantalla al loguearse correctamente */
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+
+
+  &__card {
+    background-color: #111;
+    border: 2px solid #2ecc71;
+    border-radius: 20px;
+    padding: 50px 60px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
+  }
+
+  &__icon {
+    font-size: 60px;
+    color: #2ecc71;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  &__text {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+@media (max-width: 675px) {
+
+  // Saca el posicionamiento fijo del host para que fluya normal en mobile
+  :host {
+    transform: none;
+    width: 100%;
+    left: 195px;
+    transform: translateX(-50%);
+  }
+
+  // El wrapper ocupa toda la pantalla sin padding excesivo
+  .login-wrapper {
+    padding: 5%;
+    align-items: center;
+    min-height: 100dvh;  // dvh respeta la barra del navegador en mobile
+  }
+
+  // La card ocupa casi todo el ancho de la pantalla
+  .login-card {
+    padding: 36px 24px;   // menos padding interno
+    max-width: 100%;      // ya no tiene límite de 440px
+    border-radius: 16px;  // bordes un poco menos redondeados
+
+    &__title {
+      font-size: 22px;
+    }
+
+    &__input {
+      padding: 12px 16px;
+      font-size: 15px;
+    }
+
+    &__btn {
+      padding: 13px;
+      font-size: 16px;
+    }
+
+    &__social {
+      gap: 18px;
+    }
+
+    &__social-icon {
+      font-size: 24px;
+    }
+  }
+
+  // El overlay de éxito también se adapta
+  .login-overlay {
+    &__card {
+      padding: 36px 28px;
+      margin: 0 16px;
+    }
+
+    &__icon {
+      font-size: 48px;
+    }
+
+    &__text {
+      font-size: 18px;
+    }
+  }
+}

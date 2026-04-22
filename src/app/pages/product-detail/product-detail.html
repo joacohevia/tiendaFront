@@ -1,0 +1,133 @@
+
+@if (loading) {
+  <div class="text-center my-5">
+    <p>Cargando producto...</p>
+  </div>
+}
+
+@if (error) {
+  <div class="alert alert-danger text-center">{{ error }}</div>
+}
+
+@if (product) {
+  <div class="detail">
+    <!-- Breadcrumb -->
+    <nav class="detail__breadcrumb">
+      <a [routerLink]="['/productos']">Productos</a>
+      <span class="detail__breadcrumb-sep">></span>
+      <span>{{ product.nombre }}</span>
+    </nav>
+    <!-- Fila superior: carrusel + info -->
+    <div class="detail__top">
+      <!-- Carrusel izquierda (50%) -->
+      <div class="detail__carousel">
+        <div class="carousel-wrapper">
+          <img [src]="images[currentImgIndex]" [alt]="product.nombre" class="carousel-img">
+          @if (images.length > 1) {
+            <button class="carousel-arrow carousel-arrow--left" (click)="prevImg()">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="carousel-arrow carousel-arrow--right" (click)="nextImg()">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Info derecha (50%) -->
+      <div class="detail__info">
+        <h2 class="detail__nombre">{{ product.nombre }}</h2>
+        <p class="detail__precio">{{ product.precio | currency:'USD':'symbol':'1.0-0':'en-US' }}</p>
+
+        <!-- Colores -->
+        <div class="detail__section">
+          <span class="detail__label">Colores</span>
+          <div class="detail__tags">
+            @for (c of colores; track c) {
+              <span class="detail__tag" [class.detail__tag--selected]="selectedColor === c" (click)="selectColor(c)">
+                {{ c | uppercase }}
+              </span>
+            } @empty {
+              <span class="text-muted">Sin colores</span>
+            }
+          </div>
+        </div>
+
+        <!-- Talles -->
+        <div class="detail__section">
+          <span class="detail__label">Talles</span>
+          <div class="detail__tags">
+            @for (t of talles; track t) {
+              <span class="detail__tag" [class.detail__tag--selected]="selectedTalle === t" (click)="selectTalle(t)">
+                {{ t | uppercase }}
+              </span>
+            } @empty {
+              <span class="text-muted">Sin talles</span>
+            }
+          </div>
+        </div>
+
+        <!-- Info variante seleccionada -->
+        @if (selectedVariant) {
+          <div class="detail__variant-info">
+            <span class="badge bg-success" *ngIf="selectedVariant.stock > 0">Stock: {{ selectedVariant.stock }}</span>
+            <span class="badge bg-danger" *ngIf="selectedVariant.stock === 0">Sin stock</span>
+            <button *ngIf="isAdmin" type="button" class="btn btn-outline-danger btn-sm ms-2" (click)="deleteSelectedVariant()">
+              <i class="bi bi-trash me-1"></i>Eliminar variante
+            </button>
+          </div>
+        } @else if (selectedColor && selectedTalle) {
+          <div class="detail__variant-info">
+            <span class="badge bg-warning text-dark">Variante no disponible</span>
+          </div>
+        }
+
+        <button type="button" class="btn btn-success btn-lg mt-3 detail__add-cart"
+                (click)="addSelectedToCart()"
+                [disabled]="!selectedVariant || selectedVariant.stock === 0">
+          <i class="bi bi-cart-plus me-2"></i>Agregar al carrito
+        </button>
+
+        <!-- Admin: agregar variante -->
+        @if (isAdmin) {
+          <div class="detail__admin-variant mt-3">
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="toggleVariantForm()">
+              <i class="bi bi-plus-lg me-1"></i>{{ showVariantForm ? 'Cancelar' : 'Agregar variante' }}
+            </button>
+
+            @if (showVariantForm) {
+              <form class="detail__variant-form mt-3" (ngSubmit)="submitVariant()">
+                <div class="row g-2">
+                  <div class="col-6">
+                    <label class="form-label">Talle</label>
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="newVariant.talle" name="talle" placeholder="Ej: M, L, XL">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">Color</label>
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="newVariant.color" name="color" placeholder="Ej: Rojo">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">Precio</label>
+                    <input type="number" class="form-control form-control-sm" [(ngModel)]="newVariant.precio" name="precio" required min="0">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">Stock</label>
+                    <input type="number" class="form-control form-control-sm" [(ngModel)]="newVariant.stock" name="stock" required min="0">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm mt-2">Crear variante</button>
+              </form>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Descripción abajo -->
+    <div class="detail__description">
+      <h4>Descripción</h4>
+      <p>{{ product.descripcion }}</p>
+    </div>
+  </div>
+}
+

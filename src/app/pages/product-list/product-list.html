@@ -1,0 +1,36 @@
+<div class="admin-bar" *ngIf="isAdmin">
+  <button class="btn btn-success" (click)="openCreate()">
+    <i class="bi bi-plus-lg me-1"></i>Agregar producto
+  </button>
+</div>
+
+<div class="cards-container">
+    @for (pp of product; track pp.id) {
+        <a class="card" [routerLink]="['/producto', pp.id]">
+            <div class="card__admin-actions" *ngIf="isAdmin">
+              <button class="btn btn-sm btn-warning" (click)="openEdit(pp, $event)" title="Editar">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="onDelete(pp, $event)" title="Eliminar">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+            <img [src]="pp.imagen" alt="{{pp.nombre}}" class="card__img">
+            <div class="card__info">
+                <span class="card__nombre">{{pp.nombre}}</span>
+                <span class="card__precio">{{pp.precio | currency:'USD':'symbol':'1.0-0':'en-US'}}</span>
+                <span class="card__nombre">{{pp.categoria.nombre}}</span>
+            </div>
+        </a>
+    } @empty {
+        <p>No se encontraron productos.</p>
+    }
+</div>
+<app-product-form-modal
+  [product]="editingProduct"
+  [visible]="modalVisible"
+  (save)="onSave($event)"
+  (close)="closeModal()">
+</app-product-form-modal>
+
+

@@ -1,0 +1,64 @@
+<div class="user-config">
+  <h3>Cambiar contraseña</h3>
+
+  <div class="alert alert-success" *ngIf="mensaje">{{ mensaje }}</div>
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label">Contraseña actual</label>
+      <div class="user-config__input-wrapper">
+        <input [type]="showPassword ? 'text' : 'password'" class="form-control" [(ngModel)]="passwordActual" name="passwordActual" required>
+        <button type="button" class="user-config__eye" (click)="showPassword = !showPassword">
+          <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Nueva contraseña</label>
+      <div class="user-config__input-wrapper">
+        <input [type]="showPasswordNueva ? 'text' : 'password'" class="form-control" [(ngModel)]="passwordNueva" name="passwordNueva" required
+               [class.is-invalid]="passwordMuyCorta">
+        <button type="button" class="user-config__eye" (click)="showPasswordNueva = !showPasswordNueva">
+          <i class="bi" [ngClass]="showPasswordNueva ? 'bi-eye' : 'bi-eye-slash'"></i>
+        </button>
+      </div>
+      <span class="form-text text-muted">
+        Mínimo 6 caracteres. Evitá usar datos personales como nombre o DNI.
+      </span>
+      <span class="invalid-feedback d-block" *ngIf="passwordMuyCorta">
+        La contraseña debe tener al menos 6 caracteres.
+      </span>
+    </div>
+    <!--
+      <input type="password" class="form-control" [(ngModel)]="passwordNueva" name="passwordNueva" required
+             [class.is-invalid]="passwordMuyCorta">
+      <span class="form-text text-muted">
+        Mínimo 6 caracteres. Evitá usar datos personales como nombre o DNI.
+      </span>
+      <span class="invalid-feedback" *ngIf="passwordMuyCorta">
+        La contraseña debe tener al menos 6 caracteres.
+      </span>
+    </div>
+    -->
+
+    <div class="mb-3">
+      <label class="form-label">Confirmar nueva contraseña</label>
+      <div class="user-config__input-wrapper">
+        <input [type]="showPasswordConfirmar ? 'text' : 'password'" class="form-control" [(ngModel)]="confirmarPassword" name="confirmarPassword" required
+               [class.is-invalid]="passwordNoCoincide">
+        <button type="button" class="user-config__eye" (click)="showPasswordConfirmar = !showPasswordConfirmar">
+          <i class="bi" [ngClass]="showPasswordConfirmar ? 'bi-eye' : 'bi-eye-slash'"></i>
+        </button>
+      </div>
+      <span class="invalid-feedback d-block" *ngIf="passwordNoCoincide">
+        Las contraseñas no coinciden.
+      </span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!formValido">
+      {{ loading ? 'Guardando...' : 'Cambiar contraseña' }}
+    </button>
+  </form>
+</div>
