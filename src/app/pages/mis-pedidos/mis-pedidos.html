@@ -30,7 +30,7 @@
           <td>
             <span class="badge" [ngClass]="{
               'bg-warning text-dark': pedido.estado === 'pendiente',
-              'bg-success': pedido.estado === 'completado',
+              'bg-success': pedido.estado === 'pagado',
               'bg-danger': pedido.estado === 'cancelado',
               'bg-info text-dark': pedido.estado === 'enviado'
             }">{{ pedido.estado }}</span>
@@ -62,19 +62,23 @@
                   <td>{{ item.precio_unitario | currency:'USD':'symbol':'1.0-0':'en-US' }}</td>
                   <td>x{{ item.cantidad }}</td>
                   <td>{{ (+item.precio_unitario) * item.cantidad | currency:'USD':'symbol':'1.0-0':'en-US' }}</td>
-                  <td class="text-end">
-                    <button class="btn btn-outline-danger btn-sm py-0 px-1" (click)="eliminarProducto(item)">
-                      <i class="bi bi-x-lg"></i>
-                    </button>
-                  </td>
+                  <!--
+                    <td class="text-end">
+                      <button class="btn btn-outline-danger btn-sm py-0 px-1" (click)="eliminarProducto(item)">
+                        <i class="bi bi-x-lg"></i>
+                      </button>
+                    </td>
+                  -->
                 </tr>
               </tbody>
             </table>
-            <div class="text-end mt-2 mb-1">
-              <button class="btn btn-outline-danger btn-sm" (click)="eliminarPedido(pedido, $event)">
-                <i class="bi bi-trash"></i> Eliminar pedido
-              </button>
-            </div>
+            <!--
+              <div class="text-end mt-2 mb-1">
+                <button class="btn btn-outline-danger btn-sm" (click)="eliminarPedido(pedido, $event)">
+                  <i class="bi bi-trash"></i> Eliminar pedido
+                </button>
+              </div>
+            -->
           </td>
         </tr>
       </ng-container>
