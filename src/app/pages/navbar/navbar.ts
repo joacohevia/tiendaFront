@@ -17,6 +17,7 @@ export class Navbar {
   cartCount$: Observable<number>;
   usuario$: Observable<Usuario | null>;
   isAdmin$: Observable<boolean>;
+  isMenuOpen = false;
 
   constructor(
     private router: Router,
@@ -31,7 +32,13 @@ export class Navbar {
       map(u => u?.rol === 'admin')
     );
   }
-
+  
+  closeMenu(): void {
+  const checkbox = document.getElementById('hamburger-toggle') as HTMLInputElement;
+  if (checkbox) {
+    checkbox.checked = false;
+  }
+} 
   toggleSearch(): void {
     this.searchOpen = !this.searchOpen;
     if (!this.searchOpen) {

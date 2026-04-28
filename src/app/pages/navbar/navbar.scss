@@ -156,7 +156,7 @@
   letter-spacing: 0.02em;
 }
 
-// ── Responsive base ──
+// ── Responsive base____________________________________________________________________________
 @media (max-width: 676px) {
   .navbar {
     padding: 0.5rem 0.5rem;
@@ -170,7 +170,7 @@
   }
   .nav-center,
   .navbar-collapse {
-    display: none !important;
+    display: none;//oculto menu tradicional
   }
   .hamburger-menu {
     width: 100%;
@@ -189,7 +189,7 @@
     margin-bottom: 0.5rem;
     
   }
-  .hamburger-icon span {
+  .hamburger-icon span {//cada span es una linea del menu
     display: block;
     width: 28px;
     height: 4px;
@@ -214,7 +214,7 @@
     font-size: 1.05rem;
     padding: 0.7rem 1.2rem;
   }
-
+// cuando esta checked modifica y hace la X
   #hamburger-toggle:checked + .hamburger-icon span:nth-child(1) {
     transform: rotate(45deg) translate(6px, 6px);
   }
@@ -223,7 +223,7 @@
   }
   #hamburger-toggle:checked + .hamburger-icon span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -7px);
-  }
+  }//completa X
   #hamburger-toggle:checked ~ .hamburger-dropdown {
     display: block;
   }

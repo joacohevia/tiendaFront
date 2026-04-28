@@ -22,7 +22,11 @@
 }
 
 .register-card {
-  background-color: #060606;
+  background: rgba(41, 41, 41, 0.631);   // fondo casi transparente
+  position: relative;   // para que quede por encima del ::before
+  z-index: 2;
+  backdrop-filter: blur(20px);             // efecto vidrio esmerilado
+  -webkit-backdrop-filter: blur(12px);
   border-style: groove;
   border-color: red;
   border-radius: 24px;
@@ -224,7 +228,7 @@
   :host {
     transform: none;
     width: 100%;
-    left: 195px;
+    left: 178px;
     transform: translateX(-50%);
   }
   .register-wrapper {
