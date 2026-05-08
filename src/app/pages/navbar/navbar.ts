@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { Usuario } from '../../core/models/user.model';
@@ -11,7 +11,7 @@ import { UsuariosDataService } from '../../core/services/usuarios-data';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar {
+export class Navbar implements OnInit {
   searchOpen = false;
   searchTerm = '';
   cartCount$: Observable<number>;
@@ -32,13 +32,37 @@ export class Navbar {
       map(u => u?.rol === 'admin')
     );
   }
+
+  ngOnInit(): void {
+    this.setupMenuCloseOnClickOutside();
+  }
+
+  private setupMenuCloseOnClickOutside(): void {
+    // Escuchar clicks en el documento
+    document.addEventListener('click', (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
+      const hamburgerToggle = document.getElementById('hamburger-toggle') as HTMLInputElement;
+      const navbar = document.querySelector('nav.navbar');
+      
+      // Si el menú está abierto y el click fue fuera del menú y fuera del navbar
+      if (hamburgerToggle && hamburgerToggle.checked) {
+        // Verificar que el click no fue dentro del menú hamburguesa ni en el navbar
+        const isClickOutside = !hamburgerMenu?.contains(target) && !navbar?.contains(target);
+        
+        if (isClickOutside) {
+          hamburgerToggle.checked = false;
+        }
+      }
+    });
+  }
   
   closeMenu(): void {
-  const checkbox = document.getElementById('hamburger-toggle') as HTMLInputElement;
-  if (checkbox) {
-    checkbox.checked = false;
-  }
-} 
+    const checkbox = document.getElementById('hamburger-toggle') as HTMLInputElement;
+    if (checkbox) {
+      checkbox.checked = false;
+    }
+  } 
   toggleSearch(): void {
     this.searchOpen = !this.searchOpen;
     if (!this.searchOpen) {
