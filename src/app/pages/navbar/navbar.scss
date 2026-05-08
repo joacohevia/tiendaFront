@@ -3,49 +3,43 @@
   background-color: #e0d8d8;
   border: 1px solid #e0e0e0;
   border-top: none;
-  padding: 0.5rem 1rem;
+  padding: 0.50rem 1.5rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
 
-// ── Logo ──
-.navbar a img {
-  transition: opacity 0.2s;
-  border-radius: 10px;
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.75rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+a.nav-link{
+  color: #444;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+  border: none;
+  background: none;
+  cursor: pointer;
   &:hover {
-    opacity: 0.85;
+    background-color: #fffdfd;
+    color: #000;
+    transform: scale(1.08);
+  }
+  &:active {
+    background-color: #d0d0d0;
+    transform: scale(0.97);
   }
 }
-
-// ── Links centrales ──
-.nav-center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-}
-
-.nav-item,
-.nav-link.border {
-  border-color: #d5d5d5;
-  border-radius: 6px;
-  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
-  margin: 25px;
-
-  &:hover {
-    background-color: #ececec;
-    border-color: #bbb;
-  }
-
-  .nav-link {
-    color: #333;
-    font-weight: 500;
-    font-size: 0.92rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-  }
-}
-
 // ── Botones icono (búsqueda, usuario, carrito) ──
 .nav-icon-btn {
   color: #444;
@@ -56,9 +50,24 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s, color 0.2s, transform 0.15s;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 0 0.25rem;
+
+  @media (max-width: 768px) {
+    width: 32px;
+    height: 32px;
+  }
+
+  @media (max-width: 480px) {
+    width: 28px;
+    height: 28px;
+    margin: 0 0.15rem;
+  }
 
   &:hover {
-    background-color: #e4e4e4;
+    background-color: #fffdfd;
     color: #000;
     transform: scale(1.08);
   }

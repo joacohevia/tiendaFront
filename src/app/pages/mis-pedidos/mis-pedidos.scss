@@ -1,6 +1,23 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .mis-pedidos-container {
-  max-width: 900px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem 0.75rem;
+  }
 }
 
 .pedido-row {

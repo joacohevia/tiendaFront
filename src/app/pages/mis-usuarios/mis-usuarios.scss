@@ -1,6 +1,21 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .usuarios-container {
   width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+  }
 }
 
 .usuario-row {

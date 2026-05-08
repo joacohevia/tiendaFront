@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -5,12 +10,10 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 1rem; // clave para mobile
+  padding: 1rem;
   z-index: 1000;
 }
 
@@ -18,16 +21,17 @@
   background: white;
   padding: 2rem;
   border-radius: 12px;
-
   width: 100%;
-  max-width: 400px; /* 👈 limita tamaño en desktop */
-  
+  max-width: 400px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-
   animation: slideUp 0.3s ease-out;
+
+  @media (max-width: 480px) {
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
 }
 
-/* Animación mejorada (más natural) */
 @keyframes slideUp {
   from {
     transform: translateY(40px) scale(0.95);
@@ -43,6 +47,10 @@
   margin: 0 0 1rem 0;
   font-weight: bold;
   font-size: 1.25rem;
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+  }
 }
 
 .modal-message {
@@ -55,24 +63,14 @@
   display: flex;
   gap: 10px;
   justify-content: flex-end;
-}
 
-/* 📱 MOBILE */
-@media (max-width: 480px) {
-  .modal-content {
-    padding: 1.5rem;
-    border-radius: 10px;
-  }
-
-  .modal-title {
-    font-size: 1.1rem;
-  }
-
-  .modal-actions {
+  @media (max-width: 480px) {
     flex-direction: column;
   }
 
-  .modal-actions button {
-    width: 100%;
+  button {
+    @media (max-width: 480px) {
+      width: 100%;
+    }
   }
 }
